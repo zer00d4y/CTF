@@ -1,11 +1,18 @@
-FROM python:3.11-slim
+FROM python:3
 
-WORKDIR /app
+WORKDIR /SSTI
+
+COPY app.py /SSTI/app.py
+COPY flag.txt /SSTI/flag.txt
+
+RUN apt-get update  \
+    && useradd -m ctf-player \
+    && chown -R ctf-player /SSTI
+
+USER ctf-player
 
 RUN pip install Flask
 
-COPY app.py .
-
 EXPOSE 4000
 
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
