@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template_string, redirect
+import os
 
 app = Flask(__name__)
 
@@ -12,9 +13,8 @@ def get_user_file(filename):
 @app.route('/')
 def index():
     name = request.args.get('name', 'World')
-    # Передаем функцию в контекст шаблона
     template = f'Hello {{ {name} }}!'
     return render_template_string(template, get_user_file=get_user_file)
 
 if __name__ == '__main__':
-    app.run(port=4000)
+    app.run(debug=False, host='0.0.0.0', port=4000)
